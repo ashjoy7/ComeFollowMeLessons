@@ -11,7 +11,7 @@
     function toggleQuote(quoteNumber) {
       var quote = document.getElementById("quote" + quoteNumber);
       var button = document.getElementById("button" + quoteNumber);
-      
+
       if (quote.style.display === "none") {
         quote.style.display = "block";
         button.textContent = "Hide Quote " + quoteNumber;
@@ -20,6 +20,60 @@
         button.textContent = "Quote " + quoteNumber;
       }
     }
+
+    function addComment() {
+      var comment = document.getElementById("comment").value;
+
+      fetch('/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'comment=' + encodeURIComponent(comment)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          console.log('Comment added successfully');
+          return response.json();
+        }
+        throw new Error('Error adding comment');
+      })
+      .then(function(data) {
+        console.log(data);
+        getComments();
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+      document.getElementById("comment").value = "";
+    }
+
+    function getComments() {
+      fetch('/comments')
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Error retrieving comments');
+      })
+      .then(function(data) {
+        console.log(data);
+        var commentsContainer = document.getElementById("comments");
+        commentsContainer.innerHTML = "";
+
+        data.comments.forEach(function(comment) {
+          var commentElement = document.createElement("p");
+          commentElement.textContent = comment[1];
+          commentsContainer.appendChild(commentElement);
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
+
+    window.onload = getComments;
   </script>
 </head>
 <body>
@@ -46,16 +100,5 @@
     <button onclick="addComment()">Submit</button>
   </div>
   <div id="comments"></div>
-
-  <script>
-    function addComment() {
-      var comment = document.getElementById("comment").value;
-      var commentsContainer = document.getElementById("comments");
-      var commentElement = document.createElement("p");
-      commentElement.textContent = comment;
-      commentsContainer.appendChild(commentElement);
-      document.getElementById("comment").value = "";
-    }
-  </script>
 </body>
 </html>
