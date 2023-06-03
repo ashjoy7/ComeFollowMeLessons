@@ -1,27 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Come Follow Me Quotes</title>
+  <title>Come Follow Me 'In Remembrance'</title>
+  <style>
+    .quote {
+      display: none;
+    }
+  </style>
+  <script>
+    function toggleQuote(quoteNumber) {
+      var quote = document.getElementById("quote" + quoteNumber);
+      var button = document.getElementById("button" + quoteNumber);
+      
+      if (quote.style.display === "none") {
+        quote.style.display = "block";
+        button.textContent = "Hide Quote " + quoteNumber;
+      } else {
+        quote.style.display = "none";
+        button.textContent = "Quote " + quoteNumber;
+      }
+    }
+  </script>
 </head>
 <body>
   <h1>Come Follow Me Quotes</h1>
-  
-  <h2>Quote number 1</h2>
-  <blockquote>
+
+  <button id="button1" onclick="toggleQuote(1)">Quote 1</button>
+  <blockquote class="quote" id="quote1">
     <p>"Brethren, none of us likes to admit when we are drifting off the right course. Often we try to avoid looking deeply into our souls and confronting our weaknesses, limitations, and fears. Consequently, when we do examine our lives, we look through the filter of biases, excuses, and stories we tell ourselves in order to justify unworthy thoughts and actions.</p>
     <p>But being able to see ourselves clearly is essential to our spiritual growth and well-being. If our weaknesses and shortcomings remain obscured in the shadows, then the redeeming power of the Savior cannot heal them and make them strengths.12 Ironically, our blindness toward our human weaknesses will also make us blind to the divine potential that our Father yearns to nurture within each of us."</p>
+    <p>Elder Uchtdorf</p>
+    <p><a href="https://www.churchofjesuschrist.org/study/general-conference/2014/10/lord-is-it-i?lang=eng#note2">Lord, Is It I?</a></p>
   </blockquote>
-  
-  <p>Elder Uchtdorf</p>
-  <p><a href="https://www.churchofjesuschrist.org/study/general-conference/2014/10/lord-is-it-i?lang=eng#note2">Lord, Is It I?</a></p>
 
-  <h2>Quote number 2</h2>
-  <blockquote>
+  <button id="button2" onclick="toggleQuote(2)">Quote 2</button>
+  <blockquote class="quote" id="quote2">
     <p>"Figuratively eating [the Savior’s] flesh and drinking His blood [means] to internalize the qualities and character of Christ, putting off the natural man and becoming Saints ‘through the atonement of Christ the Lord’ [Mosiah 3:19]. As we partake of the sacramental bread and water each week, we would do well to consider how fully and completely we must incorporate His character and the pattern of His sinless life into our life and being.”</p>
+    <p>Elder Christofferson</p>
+    <p><a href="https://www.churchofjesuschrist.org/study/general-conference/2017/10/the-living-bread-which-came-down-from-heaven?lang=eng&para=22#p22">The Living Bread Which Came Down from Heaven</a></p>
   </blockquote>
-  
-  <p>Elder Christofferson</p>
-  <p><a href="https://www.churchofjesuschrist.org/study/general-conference/2017/10/the-living-bread-which-came-down-from-heaven?lang=eng&para=22#p22">The Living Bread Which Came Down from Heaven</a></p>
 
+  <h2>Discussion</h2>
+  <div>
+    <textarea id="comment" placeholder="Enter your comment here"></textarea>
+    <button onclick="addComment()">Submit</button>
+  </div>
+  <div id="comments"></div>
+
+  <script>
+    function addComment() {
+      var comment = document.getElementById("comment").value;
+      var commentsContainer = document.getElementById("comments");
+      var commentElement = document.createElement("p");
+      commentElement.textContent = comment;
+      commentsContainer.appendChild(commentElement);
+      document.getElementById("comment").value = "";
+    }
+  </script>
 </body>
 </html>
